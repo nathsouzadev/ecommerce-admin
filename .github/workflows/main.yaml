@@ -16,8 +16,6 @@ env:
   NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: /dashboard
   CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
-  BRANCH_NAME: ${{ github.ref_name }}
-  CYPRESS_URL: http://127.0.0.1:5000
 
 jobs:
   lint:
@@ -63,6 +61,23 @@ jobs:
       - name: Run unit tests
         run: npm run test
 
+  wait-for-vercel-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Retrieve deployment URL (example on how to set an ENV var)
+        run: 'echo VERCEL_DEPLOYMENT_URL=ecommerce-admin-git-${{ github.ref_name }}-nathsouza.vercel.app >> $GITHUB_ENV'
+
+      - uses: UnlyEd/github-action-await-vercel@v1 # TODO best practices recommend to use a fixed version instead of @v1 for production usage (i.e: @v1.2.32)
+        id: await-vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          deployment-url: ${{ env.VERCEL_DEPLOYMENT_URL }}
+          timeout: 10 # Wait for 10 seconds before failing
+
+      - name: Displays the deployment name (example on how to read information about the deployment)
+        run: 'echo The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}'
+
   integration:
     runs-on: ubuntu-latest
 
@@ -83,3 +98,4 @@ jobs:
         with:
           browser: chrome
           headed: true
+          config: baseUrl=https://ecommerce-admin-git-${{ github.ref_name }}-nathsouza.vercel.app
