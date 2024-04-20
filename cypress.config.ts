@@ -5,6 +5,6 @@ export default defineConfig({
   e2e: {
     fixturesFolder: 'fixtures',
     setupNodeEvents(on, config) {},
-    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+    baseUrl: process.env.CYPRESS_URL ?? 'http://localhost:3000',
   },
 });

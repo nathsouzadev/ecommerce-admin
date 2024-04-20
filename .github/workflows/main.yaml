@@ -83,7 +83,7 @@ jobs:
         uses: cypress-io/github-action@v6
 
         env:
-          NEXT_PUBLIC_APP_URL: ${{ steps.capture-url.outputs.CYPRESS_BASE_URL }}
+          CYPRESS_URL: ${{ steps.capture-url.outputs.CYPRESS_BASE_URL }}
 
         with:
           browser: chrome
