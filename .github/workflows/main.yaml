@@ -16,6 +16,7 @@ env:
   NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: /dashboard
   CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+  DEPLOY_URL: ecommerce-admin-git-${{ github.ref_name }}-nathsouza.vercel.app
 
 jobs:
   lint:
@@ -64,20 +65,14 @@ jobs:
   wait-for-vercel-deployment:
     runs-on: ubuntu-latest
     steps:
-      - name: Retrieve deployment URL (example on how to set an ENV var)
-        run: 'echo VERCEL_DEPLOYMENT_URL=ecommerce-admin-git-${{ github.ref_name }}-nathsouza.vercel.app >> $GITHUB_ENV'
-
-      - uses: UnlyEd/github-action-await-vercel@v1 # TODO best practices recommend to use a fixed version instead of @v1 for production usage (i.e: @v1.2.32)
-        id: await-vercel
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - name: Waiting for 200 from the Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: waitFor200
         with:
-          deployment-url: ${{ env.VERCEL_DEPLOYMENT_URL }}
-          timeout: 90
-          poll-interval: 30
-
-      - name: Displays the deployment name (example on how to read information about the deployment)
-        run: 'echo The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}'
+          token: ${{ secrets.VERCEL_TOKEN }}
+          max_timeout: 60
+      # access preview url
+      - run: echo ${{steps.waitFor200.outputs.url}}
 
   integration:
     needs:
