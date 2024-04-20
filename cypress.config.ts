@@ -5,6 +5,6 @@ export default defineConfig({
   e2e: {
     fixturesFolder: 'fixtures',
     setupNodeEvents(on, config) {},
-    baseUrl: Cypress.env('NEXT_PUBLIC_APP_URL'),
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
   },
 });
