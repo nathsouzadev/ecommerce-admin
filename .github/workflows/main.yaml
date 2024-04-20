@@ -79,6 +79,9 @@ jobs:
         run: 'echo The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}'
 
   integration:
+    needs:
+      - wait-for-vercel-deployment
+
     runs-on: ubuntu-latest
 
     strategy:
