@@ -81,4 +81,6 @@ jobs:
         run: npm install
 
       - name: Run cypress tests
-        run: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v6
+        with:
+          config: pageLoadTimeout=100000,baseUrl=http://localhost:5000
