@@ -82,9 +82,21 @@ jobs:
       - name: Run cypress tests
         uses: cypress-io/github-action@v6
 
-        env:
-          CYPRESS_URL: ${{ steps.capture-url.outputs.CYPRESS_BASE_URL }}
+      - name: Create environment variable with protocol
+        id: create-base-url
+        run: |
+          # Capture the URL from the previous step (replace if necessary)
+          APP_URL=${{ steps.capture-url.outputs.CYPRESS_BASE_URL }}
 
-        with:
-          browser: chrome
-          headed: true
+          # Prepend http:// if protocol is missing
+          if [[ ! $APP_URL =~ ^http(s)?:// ]]; then
+            echo "WARNING: Captured URL '$APP_URL' doesn't include protocol, prepending http://"
+            APP_URL="http://${APP_URL}"
+          fi
+
+          # Export the final base URL with protocol as an environment variable
+          echo "CYPRESS_BASE_URL=$APP_URL" >> $GITHUB_ENV
+
+          with:
+            browser: chrome
+            headed: true
