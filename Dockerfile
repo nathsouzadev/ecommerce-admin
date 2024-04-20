@@ -4,7 +4,9 @@ RUN apk update && apk add --no-cache git
 
 WORKDIR /app
 
-RUN git clone https://github.com/nathsouzadev/ecommerce-admin.git --branch ${BRANCH_NAME}
+ARG BRANCH_NAME
+
+RUN git clone https://github.com/nathsouzadev/ecommerce-admin.git --branch $BRANCH_NAME
 
 WORKDIR /app/ecommerce-admin
 RUN npm install
