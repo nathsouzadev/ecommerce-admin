@@ -73,7 +73,7 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
           deployment-url: ${{ env.VERCEL_DEPLOYMENT_URL }}
-          timeout: 10 # Wait for 10 seconds before failing
+          poll-interval: 30
 
       - name: Displays the deployment name (example on how to read information about the deployment)
         run: 'echo The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}'
