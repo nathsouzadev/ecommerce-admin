@@ -81,4 +81,4 @@ jobs:
         run: npm install
 
       - name: Run cypress tests
-        run: npm run cypress:headless
+        run: cypress-io/github-action@v6
