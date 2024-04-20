@@ -79,8 +79,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-        env:
-          NEXT_PUBLIC_APP_URL: ${{ steps.deploy-app.outputs.app_url }}
-
       - name: Run cypress tests
         uses: cypress-io/github-action@v6
+
+        env:
+          NEXT_PUBLIC_APP_URL: ${{ steps.capture-url.outputs.CYPRESS_BASE_URL }}
+
+        with:
+          browser: chrome
+          headed: true
