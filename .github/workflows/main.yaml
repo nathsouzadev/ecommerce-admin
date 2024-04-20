@@ -73,7 +73,7 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
           deployment-url: ${{ env.VERCEL_DEPLOYMENT_URL }}
-          timeout: 10
+          timeout: 90
           poll-interval: 30
 
       - name: Displays the deployment name (example on how to read information about the deployment)
