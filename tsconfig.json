@@ -22,9 +22,11 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "./cypress.d.ts"],
   "exclude": [
     "node_modules",
+    "cypress",
+    "cypress.config.ts",
     "./(__tests__|app)/**/*.spec.ts",
     "./(__tests__|app)/**/*.spec.tsx",
     "**/*.spec.ts",

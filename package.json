@@ -13,6 +13,7 @@
     "cypress:headless": "npx cypress run --browser chrome"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.0.1",
     "@radix-ui/react-icons": "^1.3.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",

@@ -1,6 +1,10 @@
 describe('Home', () => {
   it('should access homepage', () => {
-    cy.visit('/');
-    cy.contains('Admin dashboard')
+    cy.visit('/', {
+      headers: {
+        'Cookie': '__client_uat=0'
+      }
+    });
+    cy.contains('Home')
   });
 });
