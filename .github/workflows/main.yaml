@@ -10,7 +10,6 @@ on:
 
 env:
   ## Sets environment variable
-  PORT: 5000
   NEXT_PUBLIC_CLERK_SIGN_IN_URL: /sign-in
   NEXT_PUBLIC_CLERK_SIGN_UP_URL: /sign-up
   NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: /dashboard
@@ -79,6 +78,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+        env:
+          NEXT_PUBLIC_APP_URL: ${{ steps.deploy-app.outputs.app_url }}
 
       - name: Run cypress tests
         uses: cypress-io/github-action@v6
