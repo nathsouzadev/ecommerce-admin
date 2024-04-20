@@ -16,7 +16,7 @@ env:
   NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: /dashboard
   CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
-  BRANCH_NAME: ${{ github.ref_info.name }}
+  BRANCH_NAME: ${{ github.ref_name }}
   CYPRESS_URL: http://127.0.0.1:5000
 
 jobs:
@@ -40,7 +40,7 @@ jobs:
         run: npm install
 
       - name: Run lint
-        run: npm run lint:check
+        run: npm run lint
 
   test:
     runs-on: ubuntu-latest
