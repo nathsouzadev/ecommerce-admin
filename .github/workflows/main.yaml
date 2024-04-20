@@ -16,6 +16,8 @@ env:
   NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: /dashboard
   CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+  BRANCH_NAME: ${{ github.ref_info.name }}
+  CYPRESS_URL: http://127.0.0.1:5000
 
 jobs:
   lint:
@@ -76,8 +78,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: npm install
+      - name: Build docker-composer
+        run: docker-compose up -d
+
+      - name: Check running container
+        run: docker ps -a
 
       - name: Run cypress tests
         uses: cypress-io/github-action@v6
