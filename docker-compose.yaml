@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  ecommerce-admin:
+    build: .
+    build-args:
+      BRANCH_NAME: ${{ github.ref_name }}
+    environment:
+      - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}}
+      - CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+      - NEXT_PUBLIC_CLERK_SIGN_IN_URL: /sign-in
+      - NEXT_PUBLIC_CLERK_SIGN_UP_URL: /sign-up
+      - NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: /dashboard
+      - NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: /dashboard
+      - NEXT_PUBLIC_APP_URL: http://localhost:5001
+      - CYPRESS_URL: http://localhost:5001
+    ports:
+      - "5001:3000"
