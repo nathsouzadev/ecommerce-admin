@@ -76,7 +76,7 @@ jobs:
           NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: /dashboard
           CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
           NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
-          BRACH_NAME: ${{ github.ref_name }}
+          BRACH_NAME: ${{ github.head_ref || github.ref_name }}
 
           run: |
             echo "CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }}" >> $GITHUB_ENV
