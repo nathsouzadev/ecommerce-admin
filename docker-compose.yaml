@@ -4,7 +4,7 @@ services:
   ecommerce-admin:
     build: .
     build-args:
-      BRANCH_NAME: ${{ github.ref_name }}
+      BRANCH_NAME: ${ github.ref_name }
     environment:
       - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}}
       - CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
