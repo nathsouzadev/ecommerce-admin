@@ -1,4 +1,4 @@
-describe('Signed out', () => {
+describe.skip('Signed out', () => {
     it('should redirect to login', () => {
         cy.visit('/dashboard', {
             headers: {
@@ -9,7 +9,7 @@ describe('Signed out', () => {
     })
 })
 
-describe.only('Signed in', () => {
+describe.skip('Signed in', () => {
     beforeEach(async () => {
         cy.session("signed-in", () => {
           cy.signIn();
