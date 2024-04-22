@@ -92,9 +92,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Build docker-composer
+        run: docker-compose up -d
+
+      - name: Check running container
+        run: docker ps -a
+
       - name: Run cypress tests
-        uses: cypress-io/github-action@v6
-        with:
-          browser: chrome
-          headed: true
-          config: baseUrl=https://ecommerce-admin-git-${{ github.ref_name }}-nathsouza.vercel.app
+        run: npm run cypress:headless
+
+      # - name: Run cypress tests
+      #   uses: cypress-io/github-action@v6
+      #   with:
+      #     browser: chrome
+      #     headed: true
