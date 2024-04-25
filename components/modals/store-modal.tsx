@@ -8,6 +8,7 @@ import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import toast from 'react-hot-toast';
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -33,7 +34,7 @@ export const StoreModal = () => {
       const result = await response.json();
       console.log(result);
     } catch (error) {
-      console.log('error', error);
+      toast.error('Something went wrong. Please try again.');
     } finally {
       form.reset();
     }
