@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  API_SERVICE_URL: 'https://api.example.com'
+
 jobs:
   lint:
     runs-on: ubuntu-latest
