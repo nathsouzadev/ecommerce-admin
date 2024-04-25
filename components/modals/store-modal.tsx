@@ -22,9 +22,21 @@ export const StoreModal = () => {
       name: ''
     }
   })
+  const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    try {
+      const response = await fetch('/api/store', {
+        method: 'POST',
+        body: JSON.stringify(values),
+      })
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      form.reset();
+    }
   }
 
   return (
@@ -48,17 +60,28 @@ export const StoreModal = () => {
                     Name
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder='E-commerce' {...field} />
+                    <Input 
+                      placeholder='E-commerce'
+                      disabled={isLoading}
+                      {...field} 
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <div className='pt-6 space-x-2 flex items-center justify-end w-full'>
-              <Button variant='outline' onClick={storeModal.onClose}>
+              <Button 
+                variant='outline' 
+                onClick={storeModal.onClose}
+                disabled={isLoading}
+              >
                   Cancel
               </Button>
-              <Button type='submit'>
+              <Button 
+                disabled={isLoading}
+                type='submit'
+              >
                   Continue
               </Button>
             </div>
