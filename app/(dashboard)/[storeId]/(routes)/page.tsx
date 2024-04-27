@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 interface DashboardPageProps {
   params: {
@@ -24,7 +24,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ params }) => {
 
   if(isLoading) return <div>Loading...</div>
   
-  if(store){
+  if(store) {
     return (
       <div>
         Dashboard
