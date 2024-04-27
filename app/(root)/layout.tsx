@@ -1,11 +1,10 @@
 'use client';
 
 import { useAuth } from '@clerk/nextjs';
-import { randomUUID } from 'crypto';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default async function SetupLayout({
+export default function SetupLayout ({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -19,7 +18,7 @@ export default async function SetupLayout({
   }
 
   useEffect(() => {
-    fetch(`/api/store`, {
+    fetch('/api/store', {
       method: 'GET',
     })
       .then((res) => res.json())

@@ -1,5 +1,3 @@
-import { randomUUID } from "crypto";
-
 const login = () => cy.visit('/', {
   headers: {
     'Cookie': '__client_uat=0'
