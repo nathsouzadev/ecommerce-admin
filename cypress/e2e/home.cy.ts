@@ -14,6 +14,7 @@ describe('Home', () => {
     cy.get("[type='submit']").click()
     cy.request('POST', '/api/store')
       .then(() => cy.contains("[type='submit']").should('be.disabled'))
+    cy.url().should('include', '/test_storeId')
   });
 
   it('should show error if request fail', async () => {

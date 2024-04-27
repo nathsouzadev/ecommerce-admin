@@ -32,6 +32,7 @@ export const StoreModal = () => {
         body: JSON.stringify(values),
       })
       const result = await response.json();
+      window.location.assign(`${result.store.id}`)
       console.log(result);
     } catch (error) {
       toast.error('Something went wrong. Please try again.');
