@@ -1,3 +1,5 @@
+import { randomUUID } from "crypto";
+
 const login = () => cy.visit('/', {
   headers: {
     'Cookie': '__client_uat=0'
@@ -35,4 +37,24 @@ describe('Home', () => {
     cy.get("[type='submit']").click()
     cy.contains('String must contain at least 1 character(s)')
   });
+
+  it('should redirect to dashboard if user have store', async () => {
+    cy.intercept('GET', '/api/store', {
+      statusCode: 200,
+      body: {
+        store: {
+          id: 'test_storeId',
+          userId: 'user_123',
+          name: 'Test Store',
+          createdAt: '2021-09-01T00:00:00.000Z',
+          updatedAt: '2021-09-01T00:00:00.000Z',
+        },
+      }
+    }).as('store');
+
+    cy.signIn();
+    cy.contains('Loading')
+    cy.wait('@store')
+    cy.url().should('include', '/test_storeId')
+  })
 });

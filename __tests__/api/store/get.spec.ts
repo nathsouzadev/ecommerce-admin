@@ -61,7 +61,6 @@ describe('GET /api/store', () => {
   });
 
   it('should return an error response if an internal error occurs', async () => {
-    const mockStoreId = randomUUID();
     const mockUserId = `user_${randomUUID()}`;
 
     nock(`${process.env.API_SERVICE_URL}`)

@@ -13,9 +13,7 @@ export default function DashboardLayout ({
     storeId: string;
   }
 }>) {
-  const [store, setStore] = useState<any>({
-    id: '',
-  });
+  const [store, setStore] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { userId } = useAuth();
     
@@ -43,7 +41,7 @@ export default function DashboardLayout ({
     return <p>Loading</p>
   }
 
-  if(!store) {
+  if(!store && !isLoading) {
     redirect('/');
   }
 

@@ -1,32 +1,46 @@
-import { auth } from '@clerk/nextjs/server';
+'use client';
+
+import { useAuth } from '@clerk/nextjs';
 import { randomUUID } from 'crypto';
 import { redirect } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-export default async function SetupLayout ({
+export default async function SetupLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { userId } = auth();
+  const [store, setStore] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const { userId } = useAuth();
 
   if (!userId) {
     redirect('/sign-in');
   }
 
-  const store = {
-    id: randomUUID(),
-    name: 'Test Store',
+  useEffect(() => {
+    fetch(`/api/store`, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setIsLoading(false);
+        if (data.statusCode === 404) {
+          setStore(null);
+          return;
+        }
+
+        setStore(data);
+      });
+  }, []);
+
+  if (isLoading) {
+    return <p>Loading</p>;
   }
 
-  console.log(store, userId)
-    
-  //   if(store) {
-  //     redirect(`/${store.id}`);
-  //   }
+  if (store) {
+    redirect(`/${store.id}`);
+  }
 
-  return(
-    <>
-      {children}
-    </>
-  )
+  return <>{children}</>;
 }
