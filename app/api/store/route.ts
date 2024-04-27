@@ -2,7 +2,6 @@ import { auth } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
 export async function POST (req: Request) {
-  console.log('HERE', req.method)
   try {
     const { userId } = auth();
     const body = await req.json();
@@ -34,23 +33,3 @@ export async function POST (req: Request) {
     return new NextResponse('Internal error', { status: 500 });
   }
 }
-
-// export async function GET (req: Request) {
-//   // const { storeId } = req.query;
-//   console.log('HERE', req)
-//   // try {
-//   //   const { userId } = auth();
-//   //   const data = req.json()
-
-//   //   const response = await fetch(
-//   //     `${process.env.API_SERVICE_URL}/user/${userId}/store/`
-//   //   );
-
-//   //   const store = await response.json();
-
-//   //   return NextResponse.json(store);
-//   // } catch (error) {
-//   //   console.log('STORES_GET]', error);
-//   //   return new NextResponse('Internal error', { status: 500 });
-//   // }
-// }
