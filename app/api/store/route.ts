@@ -33,3 +33,25 @@ export async function POST (req: Request) {
     return new NextResponse('Internal error', { status: 500 });
   }
 }
+
+export async function GET () {
+  try {
+    const { userId } = auth();
+    if (!userId) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
+
+    const response = await fetch(
+      `${process.env.API_SERVICE_URL}/user/${userId}/store`,
+    );
+    const result = await response.json();
+
+    if (result.statusCode === 404)
+      return new NextResponse(result.message, { status: 404 });
+
+    return NextResponse.json(result);
+  } catch (error) {
+    console.log('STORES_GET]', error);
+    return new NextResponse('Internal error', { status: 500 }); 
+  }
+}
