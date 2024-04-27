@@ -1,5 +1,6 @@
 'use client'
 
+import Navbar from '@/components/navbar';
 import { useAuth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -47,7 +48,7 @@ export default function DashboardLayout ({
 
   return (
     <div>
-      <div>Navbar</div>
+      <Navbar />
       {children}
     </div>
   );
