@@ -2,7 +2,7 @@ import { StoreModel } from '@/models/store.model';
 import { auth } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
-export async function GET (_: Request, { params }: { params: { id: string } }): Promise<NextResponse<{store: StoreModel}>>  {
+export async function GET (): Promise<NextResponse<{stores: StoreModel[]}>> {
   try {
     const { userId } = auth();
     if (!userId) {
@@ -10,7 +10,7 @@ export async function GET (_: Request, { params }: { params: { id: string } }): 
     }
 
     const response = await fetch(
-      `${process.env.API_SERVICE_URL}/user/${userId}/store/${params.id}`,
+      `${process.env.API_SERVICE_URL}/user/${userId}/stores`,
     );
     const result = await response.json();
 
@@ -19,7 +19,7 @@ export async function GET (_: Request, { params }: { params: { id: string } }): 
 
     return NextResponse.json(result);
   } catch (error) {
-    console.log('GET_POST]', error);
-    return new NextResponse('Internal error', { status: 500 });
+    console.log('STORES_GET]', error);
+    return new NextResponse('Internal error', { status: 500 }); 
   }
 }
