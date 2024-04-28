@@ -1,7 +1,8 @@
+import { StoreModel } from '@/models/store.model';
 import { auth } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
-export async function POST (req: Request) {
+export async function POST (req: Request): Promise<NextResponse<{store: StoreModel}>> {
   try {
     const { userId } = auth();
     const body = await req.json();
@@ -34,7 +35,7 @@ export async function POST (req: Request) {
   }
 }
 
-export async function GET () {
+export async function GET (): Promise<NextResponse<{store: StoreModel}>> {
   try {
     const { userId } = auth();
     if (!userId) {
@@ -45,6 +46,8 @@ export async function GET () {
       `${process.env.API_SERVICE_URL}/user/${userId}/store`,
     );
     const result = await response.json();
+
+    console.log(result)
 
     if (result.statusCode === 404)
       return new NextResponse(result.message, { status: 404 });

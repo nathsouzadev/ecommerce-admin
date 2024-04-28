@@ -22,6 +22,7 @@ describe('Dashboard page', () => {
       .then(() => cy.contains('Loading'))
     cy.wait('@store')
     cy.contains('Dashboard')
+    cy.contains('Store: Test Store')
   });
 
   it('should show redirect to home when store not exists', async () => {

@@ -1,5 +1,6 @@
 'use client';
 
+import { useStoreData } from '@/hooks/use-store';
 import { useAuth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -9,9 +10,9 @@ export default function SetupLayout ({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [store, setStore] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { userId } = useAuth();
+  const { store, setStore } = useStoreData();
 
   if (!userId) {
     redirect('/sign-in');
@@ -21,23 +22,21 @@ export default function SetupLayout ({
     fetch('/api/store', {
       method: 'GET',
     })
-      .then((res) => res.json())
-      .then((data) => {
-        setIsLoading(false);
+      .then(res => res.json())
+      .then(data => {
         if (data.statusCode === 404) {
-          setStore(null);
           return;
         }
-
-        setStore(data);
+        setStore(data.store);
+        setIsLoading(false);
       });
-  }, []);
+  }, [setStore]);
 
-  if (isLoading) {
+  if (!store && isLoading) {
     return <p>Loading</p>;
   }
 
-  if (store) {
+  if(store?.id) {
     redirect(`/${store.id}`);
   }
 
