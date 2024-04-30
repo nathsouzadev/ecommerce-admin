@@ -24,15 +24,16 @@ type PopoverTriggerProps = React.ComponentPropsWithoutRef<
 
 interface StoreSwitcherProps extends PopoverTriggerProps {
   items: StoreModel[];
+  isLoading: boolean
 }
 
-export const StoreSwitcher = ({ className, items }: StoreSwitcherProps) => {
+export const StoreSwitcher = ({ className, items, isLoading }: StoreSwitcherProps) => {
   const [open, setOpen] = useState(false);
   const storeModal = useStoreModal();
   const params = useParams();
   const router = useRouter();
 
-  const currentStore = items.find((item) => item.id === params.storeId);
+  const currentStore = items.find((item) => item.id === params.storeId)
 
   const onStoreSelect = (store: StoreModel) => {
     setOpen(false);
@@ -43,31 +44,33 @@ export const StoreSwitcher = ({ className, items }: StoreSwitcherProps) => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
-          size="sm"
-          role="combobox"
+          variant='outline'
+          size='sm'
+          role='combobox'
           aria-expanded={open}
-          aria-label="Select store"
+          aria-label='Select store'
           className={cn('w-[200px] justify-between', className)}
         >
-          <Store className="mr-2 h-4 w-4" />
-          {currentStore?.name}
-          <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+          <Store className='mr-2 h-4 w-4' />
+          {currentStore?.name || 'Select store'}
+          <ChevronsUpDown className='ml-auto h-4 w-4 shrink-0 opacity-50' />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      { !isLoading && <PopoverContent className='w-[200px] p-0'>
         <Command>
           <CommandList>
-            <CommandInput placeholder="Search store..." />
+            <CommandInput placeholder='Search store...' />
             <CommandEmpty>No store found</CommandEmpty>
-            <CommandGroup heading="Stores">
+            <CommandGroup heading='Stores'>
               {items.map((store) => (
                 <CommandItem
                   key={store.id}
-                  onSelect={() => onStoreSelect(store)}
-                  className="text-sm"
+                  onSelect={() => {
+                    onStoreSelect(store);
+                  }}
+                  className='text-sm'
                 >
-                  <Store className="mr-2 h-4 w-4" />
+                  <Store className='mr-2 h-4 w-4' />
                   {store.name}
                   <Check
                     className={cn(
@@ -84,19 +87,19 @@ export const StoreSwitcher = ({ className, items }: StoreSwitcherProps) => {
           <CommandSeparator />
           <CommandList>
             <CommandGroup>
-              <CommandItem 
+              <CommandItem
                 onSelect={() => {
                   setOpen(false);
-                  storeModal.onOpen()
+                  storeModal.onOpen();
                 }}
               >
-                <PlusCircle className="mr-2 h-5 w-5" />
-                  Create store
+                <PlusCircle className='mr-2 h-5 w-5' />
+                Create store
               </CommandItem>
             </CommandGroup>
           </CommandList>
         </Command>
-      </PopoverContent>
+      </PopoverContent>}
     </Popover>
   );
 };

@@ -11,7 +11,7 @@ const SetupPage = () => {
     if(!isOpen) {
       onOpen()
     }
-  }, [isOpen, onOpen])
+  }, [isOpen, onOpen]);
 
   return null
 };

@@ -10,35 +10,28 @@ export default function SetupLayout ({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isLoading, setIsLoading] = useState(true);
   const { userId } = useAuth();
-  const { store, setStore } = useStoreData();
+  const { getStore, fetchStore, isLoading } = useStoreData();
+  const [render, setRender] = useState(false);
 
   if (!userId) {
     redirect('/sign-in');
   }
 
   useEffect(() => {
-    fetch('/api/store', {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.statusCode === 404) {
-          return;
-        }
-        setStore(data.store);
-        setIsLoading(false);
-      });
-  }, [setStore]);
+    fetchStore()
+      .then(() => setRender(true));
+  }, [fetchStore]);
 
-  if (!store && isLoading) {
+  if (!getStore() && isLoading && !render) {
     return <p>Loading</p>;
   }
 
-  if(store?.id) {
-    redirect(`/${store.id}`);
+  if(getStore()?.id && !isLoading && render) {
+    window.location.replace(`/${getStore()?.id}`);
   }
 
-  return <>{children}</>;
+  if(!getStore() && !isLoading && render) {
+    return <>{children}</>;
+  }
 }
