@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -16,6 +17,7 @@ const formSchema = z.object({
 
 export const StoreModal = () => {
   const storeModal = useStoreModal();
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,7 +34,7 @@ export const StoreModal = () => {
         body: JSON.stringify(values),
       })
       const result = await response.json();
-      window.location.assign(`${result.store.id}`)
+      router.push(`/${result.store.id}`)
     } catch (error) {
       toast.error('Something went wrong. Please try again.');
     } finally {

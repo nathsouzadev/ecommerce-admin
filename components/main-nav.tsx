@@ -12,6 +12,11 @@ export const MainNav = ({
 
   const routes = [
     {
+      href: `/${params.storeId}`,
+      label: 'Overview',
+      active: pathName === `/${params.storeId}`,
+    },
+    {
       href: `/${params.storeId}/settings`,
       label: 'Settings',
       active: pathName === `/${params.storeId}/settings`,
@@ -19,7 +24,7 @@ export const MainNav = ({
   ];
 
   return (
-    <nav className={cn('flex items-center space-4 lg:space-x-6', className)}>
+    <nav className={cn('flex items-center space-x-4 lg:space-x-6', className)}>
       {routes.map((route) => (
         <Link
           key={route.href}

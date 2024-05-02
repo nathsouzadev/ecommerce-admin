@@ -1,19 +1,25 @@
 'use client'
 
 import { useStoreData } from '@/hooks/use-store';
-import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
 
-const DashboardPage = () => {
-  const { store } = useStoreData();
-
-  if(!store) {
-    redirect('/');
+interface DashboardPageProps {
+  params: {
+    storeId: string;
   }
+}
+
+const DashboardPage:React.FC<DashboardPageProps> = ({ params }) => {
+  const { getStore, fetchStoreById: getStoreById } = useStoreData();
+
+  useEffect(() => {
+    getStoreById(params.storeId);
+  }, [params.storeId, getStoreById]);
 
   return (
     <div>
       Dashboard
-      Store: {store?.name}
+      Store: {getStore()?.name}
     </div>
   )
 };

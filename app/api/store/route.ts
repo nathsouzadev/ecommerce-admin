@@ -47,8 +47,6 @@ export async function GET (): Promise<NextResponse<{store: StoreModel}>> {
     );
     const result = await response.json();
 
-    console.log(result)
-
     if (result.statusCode === 404)
       return new NextResponse(result.message, { status: 404 });
 
