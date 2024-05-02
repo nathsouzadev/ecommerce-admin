@@ -39,8 +39,8 @@ const Navbar = () => {
   }
 
   return (
-    <div className="border-b">
-      <div className="flex h-16 items-center px-4">
+    <div className='border-b'>
+      <div className='flex h-16 items-center px-4'>
         <div>
           {isLoading && !stores ? (
             <StoreSwitcher items={[]} isLoading={!isLoading} />
@@ -49,10 +49,10 @@ const Navbar = () => {
           )}
         </div>
         <div>
-          <MainNav className="mx-6 " />
+          <MainNav className='mx-6 ' />
         </div>
-        <div className="ml-auto flex items-center space-x-4">
-          <UserButton afterSignOutUrl="/" />
+        <div className='ml-auto flex items-center space-x-4'>
+          <UserButton afterSignOutUrl='/' />
         </div>
       </div>
     </div>
