@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 import { randomUUID } from 'crypto';
-import { GET } from '../../../app/api/store/route';
+import { GET } from '../../../src/app/api/store/route';
 import nock from 'nock';
 import * as clerk from '@clerk/nextjs/server';
 
