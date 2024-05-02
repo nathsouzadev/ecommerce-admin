@@ -16,7 +16,7 @@ export const useStoreData = create<UseStoreData>((set, get) => ({
   setStore: (store: StoreModel) => set({ store: {
     ...store
   } }),
-  fetchStoreById: async(storeId: string) => {
+  fetchStoreById: async (storeId: string) => {
     set({ isLoading: true });
     try {
       const response = await fetch(`/api/store/${storeId}`)
@@ -33,7 +33,7 @@ export const useStoreData = create<UseStoreData>((set, get) => ({
       set({ isLoading: false });
     }
   },
-  fetchStore: async() => {
+  fetchStore: async () => {
     set({ isLoading: true });
     try {
       const response = await fetch('/api/store')
